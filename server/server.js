@@ -1,7 +1,10 @@
 const mongoose = require("mongoose")
 const Document = require("./Document")
+require('dotenv').config();
 
-mongoose.connect('mongodb://localhost/gdocs', {
+const port= process.env.PORT || 3001
+
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -12,7 +15,7 @@ mongoose.connection.once('open',()=>{
     console.log("connected to DB")
   })
 
-const io= require('socket.io')(3001,{
+const io= require('socket.io')(port,{
     cors:{
         origin:"http://localhost:3000",
         methods:["Get","POST"]
